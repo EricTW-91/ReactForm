@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import EditForm from './edit';
 
 class User extends Component {
     state = {
@@ -7,11 +6,7 @@ class User extends Component {
         name: this.props.user.name,
         email: this.props.user.email,
         phrase: this.props.user.phrase,
-        editUser: false
-    }
-
-    handleDelete = () => {
-
+        editUser: this.props.user.editUser
     }
 
     handleEdit = () => {
@@ -20,20 +15,10 @@ class User extends Component {
         })
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.handleSubmit(this.state.name)
-
-    }
-
-    handleOnChange = () => {
-
-    }
-
     render() {
         if (this.state.editUser) {
             return (
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(e) => this.props.onSubmit(e, this.props.user.id)}>
                     <label htmlFor="name">Name:</label>
                     <input
                         name="name"
@@ -68,7 +53,7 @@ class User extends Component {
                     <span>{this.state.email}</span><br></br>
                     <span>{this.state.phrase}</span>
                     <div>
-                        <button onClick={this.handleDelete}>Delete</button>
+                        <button onClick={() => this.props.onDelete(this.props.user.id)}>Delete</button>
                         <button onClick={this.handleEdit}>Edit</button>
                     </div>
                 </div>
